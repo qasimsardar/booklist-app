@@ -1,31 +1,33 @@
-//Book Class: Represents a Book
-class Book{
-    constructor(title, author, isbn){
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
+//Task Class: Represents a Task
+class Task{
+    constructor(task, client, des, priority){
+        this.taskName = task;
+        this.client = client;
+        this.des = des;
+        this.priority = priority;
     }
 }
 
 //UI Class: Handles the UI tasks
 
 class UI{
-    static displayBooks(){
+    static displayTasks(){
 
-        const books = Store.getBooks();
+        const tasks = Store.getTasks();
 
-        books.forEach((book) => UI.addBookToList(book));
+        tasks.forEach((task) => UI.addTaskToList(task));
     }
 
-    static addBookToList(book){
-        const list = document.getElementById('book-list');
+    static addTaskToList(task){
+        const list = document.getElementById('task-list');
 
         const row = document.createElement('tr');
 
         row.innerHTML = `
-            <td>${book.title}</td>
-            <td>${book.author}</td>
-            <td>${book.isbn}</td>
+            <td>${task.taskName}</td>
+            <td>${task.client}</td>
+            <td>${task.des}</td>
+            <td>${task.priority}</td>
             <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
         `;
 
@@ -37,7 +39,7 @@ class UI{
         div.className = `alert alert-${className}`;
         div.appendChild(document.createTextNode(message));
         const container = document.querySelector('.container');
-        const form = document.querySelector('#book-form');
+        const form = document.querySelector('#task-form');
 
         container.insertBefore(div, form);
 
@@ -46,20 +48,21 @@ class UI{
     }
 
     static clearFields(){
-        document.getElementById('title').value = '';
-        document.getElementById('author').value = '';
-        document.getElementById('isbn').value = '';
+        document.getElementById('task-name').value = '';
+        document.getElementById('client').value = '';
+        document.getElementById('des').value = '';
+        document.getElementById('priority').value = '';
     }
 
-    static deleteBook(el){
+    static deleteTask(el){
         if (el.classList.contains('delete')){
             el.parentElement.parentElement.remove();
 
             //Remove from storage
-            UI.removeBooks(el.parentElement.previousElementSibling.textContent)
+            UI.removeTasks(el.parentElement.previousElementSibling.textContent)
 
             //Show success message
-            UI.showAlert('Book Removed', 'success')
+            UI.showAlert('Task Removed', 'success')
         }
     }
 
@@ -68,67 +71,68 @@ class UI{
 //Store Class: Handles Storage
 
 class Store{
-    static getBooks(){
-        let books;
-        if (localStorage.getItem('books') === null){
-            books = [];
+    static getTasks(){
+        let tasks;
+        if (localStorage.getItem('tasks') === null){
+            tasks = [];
         }
         else{
-            books = JSON.parse(localStorage.getItem('books'));
+            tasks = JSON.parse(localStorage.getItem('tasks'));
         }
 
-        return books;
+        return tasks;
     }
-    static addBooks(book){
-        const books = Store.getBooks();
-        books.push(book);
+    static addTasks(task){
+        const tasks = Store.getTasks();
+        tasks.push(task);
 
-        localStorage.setItem('books', JSON.stringify(books));
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     }
-    static removeBooks(isbn){
-        const books = Store.getBooks();
+    static removeTasks(taskName){
+        const tasks = Store.getTasks();
 
-        books.forEach((book, index) => {
-            if (book.isbn === isbn){
-                books.splice(index, 1);
+        tasks.forEach((task, index) => {
+            if (task.taskName === taskName){
+                tasks.splice(index, 1);
             }
         });
 
-        localStorage.setItem('books', JSON.stringify(books));
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 }
 
-//Event: Display Books
+//Event: Display Tasks
 
-document.addEventListener('DOMContentLoaded', UI.displayBooks);
+document.addEventListener('DOMContentLoaded', UI.displayTasks);
 
-//Event: Add a Book
-document.getElementById('book-form').addEventListener('submit', (e) => {
+//Event: Add a Task
+document.getElementById('task-form').addEventListener('submit', (e) => {
 
     //prevent actual submit
     e.preventDefault();
 
     //Get form values
-    const title = document.getElementById('title').value;
-    const author = document.getElementById('author').value;
-    const isbn = document.getElementById('isbn').value;
+    const taskName = document.getElementById('task-name').value;
+    const client = document.getElementById('client').value;
+    const des = document.getElementById('des').value;
+    const priority = document.getElementById('priority').value;
 
     //validate
-    if (title === '' || author === '' || isbn === ''){
+    if (taskName === '' || client === '' || des === '' || priority === ''){
         UI.showAlert('Please fill in all fields', 'danger')
     }
     else{
-        //Instantiate book
-        const book = new Book(title, author, isbn);
+        //Instantiate task
+        const task = new Task(taskName, client, des, priority);
 
-        //Add book to UI
-        UI.addBookToList(book);
+        //Add task to UI
+        UI.addTaskToList(task);
 
-        //Add book to store
-        Store.addBooks(book);
+        //Add task to store
+        Store.addTasks(task);
 
         //Show success message
-        UI.showAlert('Book Added', 'success')
+        UI.showAlert('Task Added', 'success')
 
         //Clear Fields
         UI.clearFields();
@@ -138,8 +142,8 @@ document.getElementById('book-form').addEventListener('submit', (e) => {
 });
 
 
-//Event: Remove a Book
+//Event: Remove a Task
 
-document.getElementById('book-list').addEventListener('click', (e) => {
-    UI.deleteBook(e.target);
+document.getElementById('task-list').addEventListener('click', (e) => {
+    UI.deleteTask(e.target);
 });

@@ -1,49 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://bootswatch.com/5/quartz/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>MyBooklistApp</title>
+    <link rel="stylesheet" href="https://bootswatch.com/5/slate/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <title>To-do List App</title>
 </head>
+
 <body>
-    <div class="container mt-4">
+    <div class="container-fluid mt-4">
         <h1 class="display-4 text-center">
-            <i class="fa-solid fa-book-open text-primary"></i>
-            My<span class="text-primary">Book</span>List
+            <i class="fa-solid fa-list-check"></i>
+            <span class="alt-col">TO-DO</span>LIST
         </h1>
+        <div class="row">
+            <div class="col-lg-4">
+                <form action="" id="task-form">
+                    <div class="form-group">
+                        <label for="task">Task</label>
+                        <input class="form-control" type="text" name="" id="task-name">
+                    </div>
+                    <div class="form-group mt-4">
+                        <label for="client">Client Name</label>
+                        <input class="form-control" type="text" name="" id="client">
+                    </div>
+                    <div class="form-group mt-4">
+                        <label for="des">Description</label>
+                        <textarea name="" id="des" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group mt-4">
+                        <label for="priority">Priority</label>
+                        <select name="" id="priority" class="form-control">
+                            <option value="Low">Low</option>
+                            <option value="Normal">Normal</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                    <input type="submit" value="Add Task" class="btn btn-primary btn-block mt-4">
+                </form>
+            </div>
+            <div class="col-lg-8">
+                <table class="table table-stripped mt-3">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Client Name</th>
+                            <th>Description</th>
+                            <th>Priority</th>
+                            <th>Done</th>
+                        </tr>
+                    </thead>
+                    <tbody id="task-list">
 
-        <form action="" id="book-form">
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input class="form-control" type="text" name="" id="title">
+                    </tbody>
+                </table>
             </div>
-            <div class="form-group">
-                <label for="author">Author</label>
-                <input class="form-control" type="text" name="" id="author">
-            </div>
-            <div class="form-group">
-                <label for="isbn">ISBN#</label>
-                <input class="form-control" type="text" name="" id="isbn">
-            </div>
-            <input type="submit" value="Add Book" class="btn btn-primary btn-block mt-2">
-        </form>
-        <table class="table table-stripped mt-5">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>ISBN#</th>
-                </tr>
-            </thead>
-            <tbody id="book-list">
-
-            </tbody>
-        </table>
+        </div>
     </div>
 
     <script src="app.js"></script>
 </body>
+
 </html>
