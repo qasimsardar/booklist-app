@@ -28,7 +28,7 @@ class UI{
             <td>${task.client}</td>
             <td>${task.des}</td>
             <td>${task.priority}</td>
-            <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
+            <td><a href="#" class="btn btn-success btn-sm delete"><i class="fa-solid fa-circle-check"></i></a></td>
         `;
 
         list.appendChild(row);
